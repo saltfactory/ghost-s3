@@ -71,7 +71,7 @@ S3Store.prototype.getTargetDir = function() {
     //     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
     // ];
     var now = new Date();
-    return options.prefix + '/' + moment.format(now).format('YYYY/MM')
+    return options.prefix + '/' + moment(now).format('YYYY/MM')
     // return now.getFullYear() + '/' + now.getMonth() + '/';
 };
 
