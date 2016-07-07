@@ -79,7 +79,7 @@ S3Store.prototype.getTargetName = function(image, targetDir) {
     var ext = path.extname(image.name);
         // name = path.basename(image.name, ext).replace(/\W/g, '_');
     // return targetDir + name + '-' + Date.now() + ext;
-    return targetDir + Date.now() + ext;
+    return targetDir + '/' + Date.now() + ext;
 };
 
 S3Store.prototype.logError = function(error) {
