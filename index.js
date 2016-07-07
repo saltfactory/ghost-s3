@@ -9,6 +9,7 @@ var readFile = nodefn.lift(fs.readFile);
 var unlink = nodefn.lift(fs.unlink);
 var AWS = require('aws-sdk');
 var options = {};
+var moment = require('moment');
 
 function S3Store(config) {
   options = config || {};
@@ -65,19 +66,20 @@ S3Store.prototype.serve = function() {
 };
 
 S3Store.prototype.getTargetDir = function() {
-    var MONTHS = [
-        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
+    // var MONTHS = [
+    //     'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    //     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    // ];
     var now = new Date();
-    return now.getFullYear() + '/' + MONTHS[now.getMonth()] + '/';
+    return options.prefix + '/' + moment.format(now).format('YYYY/MM')
+    // return now.getFullYear() + '/' + now.getMonth() + '/';
 };
 
 S3Store.prototype.getTargetName = function(image, targetDir) {
-    var ext = path.extname(image.name),
-        name = path.basename(image.name, ext).replace(/\W/g, '_');
-
-    return targetDir + name + '-' + Date.now() + ext;
+    var ext = path.extname(image.name);
+        // name = path.basename(image.name, ext).replace(/\W/g, '_');
+    // return targetDir + name + '-' + Date.now() + ext;
+    return targetDir + Date.now() + ext;
 };
 
 S3Store.prototype.logError = function(error) {
